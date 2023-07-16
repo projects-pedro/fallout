@@ -1,0 +1,9 @@
+[[redirects]]
+  from = "/utils/*"
+  to = "https://loceka-utils.netlify.app/:splat"
+
+[[redirects]]
+  from = "/"
+  to = "/FalloutTalents.html"
+  status = 200
+  force = true
