@@ -21,11 +21,16 @@
 				--pod-half-height: 6px;
 				--pod-insert-width: 5px;
 				--pod-height: calc(2 * var(--pod-half-height));
-				--pod-width: 20px;
+				--pod-width-inside: 20px;
 				--pod-border-width: 1px;
+				--pod-width: calc(var(--pod-insert-width) + var(--pod-width-inside));
+				--pod-insert-width-bordered: calc(var(--pod-insert-width) + var(--pod-border-width));
 
 				--talent-bg-color-odd: #AAA3;
 				--talent-bg-color-even: #00cc8620;
+			}
+			* {
+				box-sizing: border-box;
 			}
 			html, body {
 				padding: 0;
@@ -64,7 +69,6 @@
 				break-inside: avoid;
 				gap: 3mm;
 				padding: 6mm 6mm 8mm 6mm;
-				box-sizing: border-box;
 			}
 			.page:nth-of-type(1) {
 				padding-top: 0;
@@ -73,7 +77,6 @@
 				display: flex;
 				flex-direction: row;
 				justify-content: center;
-				box-sizing: border-box;
 				width: 100%;
 			}
 
@@ -82,6 +85,19 @@
 				border-collapse: collapse;
 				border-radius: 5px;
 			}
+
+			.sectHeader {
+				font-size: 0.8em;
+				font-weight: bold;
+				text-transform: capitalize;
+				font-family: sans-serif;
+				padding: 0 3px;
+				background-color: #2222;
+			}
+
+			/*
+			 * Page 1
+			 */
 
 			#charInfo {
 				flex: auto;
@@ -176,6 +192,7 @@
 				width: 15ex;
 				height: 9mm;
 				padding-bottom: 0.6em;
+				box-sizing: content-box;
 			}
 			.status input.value, .status .value input {
 				display: flex;
@@ -284,11 +301,19 @@
 			}
 
 			.pods {
+				position: relative;
 				display: flex;
+				box-sizing: border-box;
+				border: solid black var(--pod-border-width);
+				height: var(--pod-height);
+				width: max-content;
+				border-radius: var(--pod-half-height);
+				overflow: hidden;
 			}
 			.pod {
 				position: relative;
 				display: inline-block;
+				margin-top: calc(-1 * var(--pod-border-width));
 				width: var(--pod-width);
 				height: var(--pod-height);
 				background-color: white;
@@ -299,68 +324,56 @@
 			.pod.fill.checked {
 				background-color: gold;
 			}
-			.pod, .pod:not(:first-of-type)::after {
-				box-sizing: border-box;
-				border: solid black 0;
-				border-width: var(--pod-border-width) 0;
+			.pod:not(:first-of-type) {
+				margin-left: calc(-1 * var(--pod-insert-width));
+				clip-path: polygon(0 0, var(--pod-width-inside) 0, var(--pod-width) var(--pod-half-height), var(--pod-width-inside) var(--pod-height), 0 var(--pod-height), var(--pod-insert-width) var(--pod-half-height));
 			}
 			.pod:first-of-type {
-				width: calc(var(--pod-width) + var(--pod-insert-width));
-				border-left-width: var(--pod-border-width);
-				border-top-left-radius: var(--pod-half-height);
-				border-bottom-left-radius: var(--pod-half-height);
+				clip-path: polygon(0 0, var(--pod-width-inside) 0, var(--pod-width) var(--pod-half-height), var(--pod-width-inside) var(--pod-height), 0 var(--pod-height));
 			}
 			.pod:last-of-type {
-				border-right-width: var(--pod-border-width);
-				border-top-right-radius: var(--pod-half-height);
-				border-bottom-right-radius: var(--pod-half-height);
-			}
-			.pod:not(:first-of-type)::before, .pod:not(:first-of-type)::after {
-				content: "";
-				position: absolute;
-				top: calc(-1 * var(--pod-border-width));
-				left: calc(-1 * var(--pod-insert-width));
-				display: inline-block;
-				width: var(--pod-insert-width);
-				height: var(--pod-height);
-				clip-path: polygon(var(--pod-border-width) 0, var(--pod-insert-width) var(--pod-half-height), var(--pod-border-width) var(--pod-height), 0 var(--pod-height), calc(var(--pod-insert-width) - var(--pod-border-width)) var(--pod-half-height), 0 0);
-				background-color: black;
+				clip-path: polygon(0 0, var(--pod-width) 0, var(--pod-width) var(--pod-height), 0 var(--pod-height), var(--pod-insert-width) var(--pod-half-height));
 			}
 			.pod:not(:first-of-type)::after {
-				clip-path: polygon(var(--pod-border-width) 0, var(--pod-insert-width) 0, var(--pod-insert-width) var(--pod-height), var(--pod-border-width) var(--pod-height), var(--pod-insert-width) var(--pod-half-height));
-				background-color: inherit;
+				content: "";
+				position: absolute;
+				display: inline-block;
+				width: var(--pod-insert-width-bordered);
+				height: var(--pod-height);
+				clip-path: polygon(var(--pod-border-width) 0, var(--pod-insert-width-bordered) var(--pod-half-height), var(--pod-border-width) var(--pod-height), 0 var(--pod-height), calc(var(--pod-insert-width) - var(--pod-border-width)) var(--pod-half-height), 0 0);
+				background-color: black;
 			}
 
-			#equipment table {
-				width: var(--inside-width);
+			#equipment {
+				flex: 1;
 			}
-			#equipment table td {
+			#equipment .section {
+				position: relative;
+				display: flex;
+				width: var(--inside-width);
 				border: solid grey 1px;
 			}
-			#equipment tr:first-child td:last-child {
-				border-left-style: none;
-			}
-			#equipment tr:last-child td {
-				border-right-style: none;
-				height: 4cm;
-			}
 			#equipment .caps {
-				position: relative;
+				position: absolute;
+				display: flex;
+				gap: 2px;
 				width: 100px;
 				height: 1rem;
 				font-size: 0.7em;
 				font-variant: small-caps;
 				font-family: sans-serif;
-				padding: 1px 0 1px 3px;
+				padding: 0 0 0 3px;
+				border: solid grey 1px;
+				border-style: none solid solid none;
 			}
 			#equipment .caps input {
-				position: absolute;
-				top: 1px;
-				right: 0;
-				background-color: white;
-				width: calc(100% - 6.5ex);
-				height: 1rem;
+				flex: 1;
+				background-color: var(--bg-color-input);
 				text-align: center;
+			}
+			#equipment textarea {
+				text-indent: 100px;
+				padding: 5px;
 			}
 
 			#weapons table {
@@ -375,12 +388,18 @@
 				padding: 0 5px;
 			}
 			#weapons table th {
+				position: relative;
 				font-size: 0.7em;
 				border-style: none;
 			}
-			#weapons .damage, #weapons .crit, #weapons .range, #weapons .ammo {
+			#weapons .damage, #weapons .crit, #weapons .range, #weapons .ammoType, #weapons .ammoCount {
 				width: 0;
 				min-width: max-content;
+			}
+			#weapons th.special::before {
+				content: "ammo :";
+				position: absolute;
+				right: 0;
 			}
 
 			#footer {
@@ -396,7 +415,6 @@
 				border-radius: 5px;
 				width: 5cm;
 				padding: 0 5px;
-				box-sizing: border-box;
 				align-items: center;
 				gap: 3px;
 			}
@@ -459,15 +477,16 @@
 			/*
 			 * Page 2
 			 */
-			
+
 			.sectHeader {
 				font-size: 0.8em;
 				font-weight: bold;
 				text-transform: capitalize;
 				font-family: sans-serif;
 				padding: 0 3px;
+				background-color: #2222;
 			}
-			
+
 			#character {
 				margin-top: 0.5cm;
 			}
@@ -478,6 +497,10 @@
 			}
 			#character .features > *, #character .notable > *:not(textarea) {
 				border-bottom: dashed black 1px;
+			}
+			#character .features .sectHeader {
+				border-bottom-style: none;
+				margin: 1px 0;
 			}
 			#character .features {
 				flex: 1;
@@ -496,7 +519,6 @@
 			}
 			#character .notable textarea {
 				flex: 1;
-				box-sizing: border-box;
 				padding: 5px;
 			}
 
@@ -513,11 +535,9 @@
 			}
 			#motivations .section > * {
 				padding: 5px;
-				box-sizing: border-box;
 				width: auto;
 			}
 			#motivations .section label {
-				background-color: #0002;
 				width: min-content;
 			}
 			#motivations .section textarea {
@@ -528,18 +548,18 @@
 
 			#notes {
 				flex: 1;
-				box-sizing: border-box;
 			}
 			#notes .section {
 				width: var(--inside-width);
 				height: 100%;
 				border: dashed black 1px;
+				padding: 5px;
 			}
 
 			/*
 			 * Talents
 			 */
-			
+
 			#talentList option {
 				text-transform: capitalize;
 			}
@@ -561,9 +581,6 @@
 				padding: 5mm 2mm 2mm 2mm;
 				background-color: var(--talent-bg-color-odd);
 				border-radius: 3mm;
-			}
-			.talent, .talent .caption > *, .talent .head, .talent .desc, .cost, .cost .desc {
-				box-sizing: border-box;
 			}
 			.talent .caption {
 				display: flex;
@@ -780,39 +797,39 @@
 
 			function initEquipment() {
 				const container = document.querySelector("#equipment");
-				container.insertAdjacentHTML("beforeend", `<table class="section"><tr><td class="caps"><label for="caps">Caps</label><input type="text" name="caps"/></td><td rowspan="2"></td></tr><tr><td></td></tr></table>`);
+				container.insertAdjacentHTML("beforeend", `<div class="section"><div class="caps sectHeader"><label for="caps">Caps</label><input type="text" name="caps"/></div><textarea></textarea></div>`);
 			}
 
 			function initWeapons() {
 				const container = document.querySelector("#weapons");
-				const headers = ["weapon", "damage", "crit", "range", "special", "ammo"];
+				const headers = ["weapon", "damage", "crit", "range", "special", "ammoType", "ammoCount"];
 				const rows = 10;
 				let content = "";
 				for (let i = 0; i < rows; i++) {
 					content += "<tr>";
 					headers.forEach(h => {
-						content += i === 0 ? `<th class="${h}">${h}</th>` : `<td class="${h}"></td>`;
+						content += i === 0 ? `<th class="${h}">${h.replace("ammo","")}</th>` : `<td class="${h}"></td>`;
 					});
 					content += "</tr>";
 				}
 				container.insertAdjacentHTML("beforeend", `<table class="section">${content}</table>`);
 			}
-			
+
 			function initCharacter() {
 				const container = document.querySelector("#character");
 				const notable = "notable features";
 				const features = Object.keys(sheetData.character).filter(k => k !== notable).reduce((s, k) => s += `<div class="sectHeader">${k}</div><input type="text" name="${k}"/>`, '<div class="features">') + '</div>';
 				container.insertAdjacentHTML("beforeend", `<div class="section">${features}<div class="notable"><div class="sectHeader">${notable}</div><textarea name="${notable}"></textarea></div></div>`);
 			}
-			
+
 			function initMotivations() {
 				const container = document.querySelector("#motivations");
 				container.insertAdjacentHTML("beforeend", Object.keys(sheetData.motivations).reduce((s, k) => s += `<div class="section"><label for="${k}-name" class="sectHeader">${k}</label><input type="text" name="${k}-name"/><textarea name="${k}-desc"></textarea></div>`, ""));
 			}
-			
+
 			function initNotes() {
 				const container = document.querySelector("#notes");
-				container.insertAdjacentHTML("beforeend", '<div class="section"></div>');
+				container.insertAdjacentHTML("beforeend", '<textarea class="section"></textarea>');
 			}
 
 			function initFooter() {
@@ -963,17 +980,17 @@
 				initEquipment();
 				initWeapons();
 				initFooter();
-				
+
 				// page 2
 				initCharacter();
 				initMotivations();
 				initNotes();
-				
+
 				// talents
 				initTalentElems();
 				enrichTalents();
 				fillTalentAutoComplete();
-				
+
 				// saves
 				restoreSaved();
 			}
