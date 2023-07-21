@@ -3,6 +3,12 @@
   to = "https://loceka-utils.netlify.app/:splat"
 
 [[redirects]]
+  from = "/sheet"
+  to = "/FalloutCharacterSheet.html"
+  status = 200
+  force = true
+
+[[redirects]]
   from = "/"
   to = "/FalloutTalents.html"
   status = 200
