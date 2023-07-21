@@ -595,6 +595,7 @@
 				display: none;
 				flex: 1;
 				font-size: 0.7em;
+				color: red;
 				opacity: 0.3;
 				cursor: pointer;
 			}
@@ -895,7 +896,7 @@
 				const oldTalentId = cont.dataset.id;
 				if (oldTalentId) {
 					const oldTalent = talents[Number(oldTalentId)];
-					oldTalent.times = !use ? oldTalent.times : oldTalent.ranked ? atTier - oldTalent.tier : 0;
+					oldTalent.times = (use === false && oldTalent.ranked) ? oldTalent.times : (oldTalent.ranked ? atTier - oldTalent.tier : 0);
 					selectTalent(document.querySelector(`.talent[data-id = "${oldTalentId}"][data-tier = "${atTier+1}"] .head`), false);
 					(oldTalent.childrenIds ?? []).forEach(id => selectTalent(document.querySelector(`.talent[data-id = "${id}"] .head`), false));
 
@@ -910,7 +911,7 @@
 					delete cont.dataset.id;
 				}
 
-				if (use) fillTalentAutoComplete();
+				if (use !== false) fillTalentAutoComplete();
 				if (!selectedTalent) {
 					saveData();
 				}
@@ -954,7 +955,7 @@
 					for (let l = 1; l <= maxLines; l++) {
 						for (let c = 1; c <= maxCols; c++) {
 							container.insertAdjacentHTML('beforeend', (l < maxLines) ?
-								`<div id="t${c}_${l}" class="talent" data-tier="${c}"><div class="caption"><span class="remove" onclick="selectTalent(this.parentElement.nextSibling, false)">&#10060;</span><span class="activation"></span><span class="rate"></span></div><input class="head" type="text" autoComplete="on" list="talentList${c}" ondblclick="this.value = ''" onblur="this.value = talentName(this.parentElement.dataset.id)" onchange="selectTalent(event)"/><textarea class="desc" onchange="updateDesc(this)"></textarea></div>`
+								`<div id="t${c}_${l}" class="talent" data-tier="${c}"><div class="caption"><span class="remove" onclick="selectTalent(this.parentElement.nextSibling, null)">&#10060;</span><span class="activation"></span><span class="rate"></span></div><input class="head" type="text" autoComplete="on" list="talentList${c}" ondblclick="this.value = ''" onblur="this.value = talentName(this.parentElement.dataset.id)" onchange="selectTalent(event)"/><textarea class="desc" onchange="updateDesc(this)"></textarea></div>`
 								: `<div class="cost"><div class="desc">Tier ${c}<div class="xp">${5*c}</div></div></div>`
 							);
 							if (page === 0 && c > l) {
