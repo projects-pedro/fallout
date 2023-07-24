@@ -192,6 +192,12 @@
 				padding-bottom: 0.6em;
 				box-sizing: content-box;
 			}
+			.status.soak {
+				width: 12ex;
+			}
+			.status.XP {
+				width: 18ex;
+			}
 			.status input.value, .status .value input {
 				display: flex;
 				font-size: 1rem;
@@ -796,7 +802,7 @@
 					let inputs = Object.entries(o).filter(([,v]) => v && typeof v === "object").reduce((s, [k]) => s + `<span class="value" data-name="${k}"><input type="text"/></span>`, "");
 					inputs = inputs || '<input type="text" class="value"/>';
 					inputs += o.split ? inputs : "";
-					container.insertAdjacentHTML("beforeend", `<span class="status">${inputs}<div class="name">${s}</div></span>`);
+					container.insertAdjacentHTML("beforeend", `<span class="status ${s}">${inputs}<div class="name">${s}</div></span>`);
 				});
 			}
 
