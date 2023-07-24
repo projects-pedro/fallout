@@ -148,11 +148,10 @@
 
 			.attr {
 				display: grid;
+				grid-template-rows: 1fr 3fr 1fr 1.5fr;
+				grid-template-columns: 1fr 2.5fr 1fr;
 				grid-template-areas:
 					". . ."
-					". . ."
-					". v ."
-					". v ."
 					". v ."
 					". . ."
 					"n n n";
@@ -164,9 +163,8 @@
 			}
 			.attr .value {
 				grid-area: v;
-				width: 3ex;
-				height: 2rem;
-				margin: auto;
+				width: 100%;
+				height: 100%;
 				font-size: 2rem;
 				text-align: center;
 				padding-top: 3px;
@@ -698,6 +696,15 @@
 			}
 			#sheet {
 				gap: 0;
+			}
+			.pod.checked::before {
+				content: "x";
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				height: 100%;
+				line-height: 100%;
+				font-size: 70%;
 			}
 		</style>
 		<script type="text/javascript" src="FalloutTalents.js"></script>
