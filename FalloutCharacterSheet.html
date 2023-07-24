@@ -196,7 +196,13 @@
 				display: flex;
 				font-size: 1rem;
 				text-align: center;
-				width: 5.5ex;
+				margin-bottom: -5px;
+			}
+			.status .value:first-of-type {
+				margin-left: 10px;
+			}
+			.status .value:last-of-type {
+				margin-right: 10px;
 			}
 			.status .value:not(:first-of-type) {
 				border-left: solid black 1px;
@@ -212,9 +218,15 @@
 			.status span.value::before {
 				content: attr(data-name);
 				top: -1em;
-				margin-left: auto;
 				font-size: 0.6em;
 				padding: 1px 3px;
+				width: 80%;
+			}
+			.status span.value:first-of-type::before {
+				right: 5px;
+			}
+			.status span.value:last-of-type::before {
+				left: 5px;
 			}
 			.status .name {
 				bottom: -0.7em;
