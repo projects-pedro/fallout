@@ -4028,7 +4028,7 @@ const talents = [
 		"ranked": false,
 		"description": "Once per session, take a Thorough Assessment Action: make a Hard (<span data-dice='d' title='difficulty dice (purple)'>d</span><span data-dice='d' title='difficulty dice (purple)'>d</span><span data-dice='d' title='difficulty dice (purple)'>d</span>) Knowledge check to gain <span data-result='s' title='success'>s</span> equal to that can be distributed during the session.",
 		"rate": "Session",
-		"summary": "Hard (<span data-dice='d' title='difficulty dice (purple)'>d</span><span data-dice='d' title='difficulty dice (purple)'>d</span><span data-dice='d' title='difficulty dice (purple)'>d</span>) Knowledge check to gain <span data-result='s' title='success'>s</span> that can be distributed during the session."
+		"summary": "Hard (<span data-dice='d' title='difficulty dice (purple)'>d</span><span data-dice='d' title='difficulty dice (purple)'>d</span><span data-dice='d' title='difficulty dice (purple)'>d</span>) Knowledge check to gain successes (<span data-result='s' title='success'>s</span>) that can be distributed during the session."
 	},
 	{
 		"id": 431,
