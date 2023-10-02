@@ -3773,7 +3773,8 @@ const talents = [
 		"description": "Your character must have purchased the Stim Application talent to benefit from this talent. When performing the Stim Application it becomes an Incidental instead of an Action. You may increase the difficulty of the Medicine check to Hard (<span data-dice='d' title='difficulty dice (purple)'>d</span><span data-dice='d' title='difficulty dice (purple)'>d</span><span data-dice='d' title='difficulty dice (purple)'>d</span>) as an Incidental. If you do so, the target of the talent suffers one Strain instead of four.",
 		"rate": "",
 		"requiresId": 402,
-		"requires": "STIM APPLICATION"
+		"requires": "STIM APPLICATION",
+		"summary": "Increase the difficulty of the Medicine check to Hard (<span data-dice='d' title='difficulty dice (purple)'>d</span><span data-dice='d' title='difficulty dice (purple)'>d</span><span data-dice='d' title='difficulty dice (purple)'>d</span>) as an Incidental. The target of the talent suffers 1 Strain instead of 4."
 	},
 	{
 		"id": 404,

@@ -976,10 +976,11 @@
 
 			function initTalentElems() {
 				[...document.querySelectorAll(".talents")].forEach((container, page) => {
-					const maxLines = 8, maxCols = 5;
-					for (let l = 1; l <= maxLines; l++) {
+					const maxLines = 8, maxCols = 5, lastLine = (page + 1) * maxLines - page;
+					for (let l = page * (maxLines - 1) + 1; l <= lastLine; l++) {
 						for (let c = 1; c <= maxCols; c++) {
-							container.insertAdjacentHTML('beforeend', (l < maxLines) ?
+							console.log("page:", page, "line:", l, "modulo:", l % maxLines)
+							container.insertAdjacentHTML('beforeend', (l !== lastLine) ?
 								`<div id="t${c}_${l}" class="talent" data-tier="${c}"><div class="caption"><span class="remove" onclick="selectTalent(this.parentElement.nextSibling, null)">&#10060;</span><span class="activation"></span><span class="rate"></span></div><input class="head" type="text" autoComplete="on" list="talentList${c}" ondblclick="this.value = ''" onblur="this.value = talentName(this.parentElement.dataset.id)" onchange="selectTalent(event)"/><textarea class="desc" onchange="updateDesc(this)"></textarea></div>`
 								: `<div class="cost"><div class="desc">Tier ${c}<div class="xp">${5*c}</div></div></div>`
 							);
