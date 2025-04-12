@@ -23,6 +23,12 @@
 				-ms-text-size-adjust: none;
 				text-size-adjust: none;
 			}
+			body {
+				display: flex;
+			}
+			#talents_table {
+				flex: 1;
+			}
 			th {
 				position: sticky;
 				top: 0;
@@ -141,6 +147,12 @@
 		<script type="text/javascript" data-drive="/I:">if (typeof _jsUtilsLoader === "undefined") document.write(document.querySelector("script[data-load]")?.outerHTML.replace(/(?<=src=(["']))(?:\/\w:(?=\/))?([^\1]+)/, document.currentScript.dataset.drive + "$2"));</script>
 	</head>
 	<body>
+		<aside id="menu">
+			<section>
+				<h1>Talents</h1>
+				<input type="checkbox" name="summary"/><label for="summary">Summary</label>
+			</section>
+		</aside>
 		<table id="talents_table">
 			<thead>
 				<tr></tr>
@@ -175,6 +187,9 @@
 
 				const order = hash.order || localStorage.getItem("order");
 				so.import(order);
+			}
+			function cleanedTalents() {
+				return talents.map(({marked, ...rest}) => rest);
 			}
 
 			function summarizeSymbols(container = document) {
